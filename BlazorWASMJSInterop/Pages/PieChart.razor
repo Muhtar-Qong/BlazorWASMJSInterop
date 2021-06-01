@@ -1,0 +1,46 @@
+﻿@page "/piechart"
+
+@using Microsoft.JSInterop
+@inject IJSRuntime JSRuntime
+
+<div class="row">
+    @*Title*@
+    <div class="col-md-8" style="color:darkmagenta; font-weight:800">
+        <h3>Calling JS from Blazor WebAssembly Apps</h3>
+    </div>
+
+    @*Button to show pie chart*@
+    <div class="col-md-4">
+        <button type="button" class="btn btn-outline-primary" @onclick="ShowChart">Show Chart</button>
+    </div>
+
+    <div class="col-md-12">
+        <hr />
+    </div>
+</div>
+
+@*Div container to hold that 3D pie chart*@
+<div class="row">
+    <div id="chart_container_div" style="width:900px; height:500px"></div>
+</div>
+
+@*Show credit for Google Chart Tools*@
+<div class="row">
+    @if (showCredit == true)
+    {
+        <hr />
+        <div class="col-md-8">            
+            3D Pie Chart created by using Google Chart Tools.
+        </div>
+    }
+</div>
+
+@code {
+    private bool showCredit = false;
+
+    public async Task ShowChart()
+    {
+        showCredit = true;
+        await JSRuntime.InvokeVoidAsync("draw3DPieChart", "Calling JS from Blazor!");
+    }
+}
